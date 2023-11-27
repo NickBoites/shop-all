@@ -5,7 +5,9 @@ import com.metaphorce.shopall.dto.ProductDTO;
 import com.metaphorce.shopall.exception.ProductNotFoundException;
 import com.metaphorce.shopall.model.Product;
 import com.metaphorce.shopall.model.ProductCategory;
+import com.metaphorce.shopall.model.SellerProfile;
 import com.metaphorce.shopall.repository.ProductRepository;
+import com.metaphorce.shopall.repository.SellerProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
@@ -19,6 +21,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private SellerProfileService sellerService;
 
     @Autowired
     private ProductCategoryService productCategoryService;
@@ -81,6 +86,14 @@ public class ProductService {
         ProductCategory category = modelMapper.map(categoryDTO, ProductCategory.class);
 
         List<Product> foundProducts = productRepository.findByCategory(category);
+        return foundProducts.stream()
+                .map(product -> modelMapper.map(product, ProductDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductDTO> getProductsForSeller(Long sellerId) {
+        SellerProfile seller = modelMapper.map(sellerService.getSellerById(sellerId), SellerProfile.class);
+        List<Product> foundProducts = productRepository.findBySeller(seller);
         return foundProducts.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .collect(Collectors.toList());

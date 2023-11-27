@@ -1,7 +1,9 @@
 package com.metaphorce.shopall.dto;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class ProductReviewDTO {
     private Long reviewId;
     private ProductDTO product;
