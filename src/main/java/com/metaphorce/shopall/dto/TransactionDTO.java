@@ -1,8 +1,11 @@
 package com.metaphorce.shopall.dto;
 
+import lombok.Data;
+
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class TransactionDTO {
     private Long transactionId;
     private UserDTO user;

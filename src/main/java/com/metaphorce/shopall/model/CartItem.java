@@ -2,9 +2,10 @@ package com.metaphorce.shopall.model;
 
 import com.metaphorce.shopall.model.Cart;
 import com.metaphorce.shopall.model.Product;
+import lombok.Data;
 
 import javax.persistence.*;
-
+@Data
 @Entity
 public class CartItem {
     @Id
