@@ -10,7 +10,7 @@ public class ApiError {
     public ApiError(HttpStatus status, String message, Throwable throwable) {
         this.status = status;
         this.message = message;
-//        this.throwable = throwable;
+        this.throwable = throwable;
     }
 
     // Getters y setters
