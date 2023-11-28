@@ -17,6 +17,10 @@ public class Transaction {
     @JoinColumn(name = "userId")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "sellerId")
+    private SellerProfile seller;
+
     private Double totalAmount;
 
     @Temporal(TemporalType.TIMESTAMP)

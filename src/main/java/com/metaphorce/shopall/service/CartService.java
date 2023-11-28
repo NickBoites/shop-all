@@ -50,6 +50,7 @@ public class CartService {
         newCartItem.setCart(cartDB);
         CartItem savedNewCartItem = cartItemRepository.save(newCartItem);
 
+        // Actualizar el carrito con el nuevo CartItem
         cartDB.getCartItems().clear();
         cartDB.getCartItems().add(savedNewCartItem);
         Cart savedCart = cartRepository.save(cartDB);
@@ -73,5 +74,9 @@ public class CartService {
         cartDto.setTotalAmount(totalAmount);
 
         return cartDto;
+    }
+
+    public void removeCartItem(Long cartItemId) {
+        cartItemRepository.deleteById(cartItemId);
     }
 }

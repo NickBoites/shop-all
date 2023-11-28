@@ -70,6 +70,13 @@ public class BuyerController {
         return ResponseEntity.ok(updatedCart);
     }
 
+    // Eliminar producto del carrito
+    @DeleteMapping("/cart/{cartItemId}")
+    public ResponseEntity<CartDTO> removeCartItem(@PathVariable Long cartItemId) {
+        cartService.removeCartItem(cartItemId);
+        return ResponseEntity.noContent().build();
+    }
+
     // Completar transacción
     @PostMapping("/transaction")
     public ResponseEntity<TransactionDTO> completeTransaction(@RequestBody TransactionDTO transactionDto) {

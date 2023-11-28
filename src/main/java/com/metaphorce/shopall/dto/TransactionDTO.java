@@ -9,11 +9,11 @@ import java.util.List;
 public class TransactionDTO {
     private Long transactionId;
     private UserDTO user;
+    private SellerProfileDTO seller;
     private Double totalAmount;
     private Date transactionDate;
     private String shippingAddress;
     private String paymentDetails;
     private List<TransactionDetailsDTO> transactionDetails;
 
-    // Getters y Setters
 }
