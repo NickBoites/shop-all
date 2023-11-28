@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,9 @@ public class TransactionService {
 
         // Convertir DTO a entidad y guardar
         Transaction transaction = modelMapper.map(transactionDto, Transaction.class);
+
+        Date date = new Date();
+        transaction.setTransactionDate(date);
         transaction = transactionRepository.save(transaction);
 
         // Convertir entidad guardada a DTO y retornar
@@ -48,7 +52,7 @@ public class TransactionService {
 
     public void updateInventory(TransactionDTO transactionDto) {
         for (TransactionDetailsDTO details : transactionDto.getTransactionDetails()) {
-            Long productId = details.getProduct().getProductId();
+            Long productId = details.getProductId();
             Integer quantityPurchased = details.getQuantity();
 
             Product product = productRepository.findById(productId)

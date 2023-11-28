@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class TransactionDetailsDTO {
     private Long transactionDetailId;
-    private TransactionDTO transaction;
-    private ProductDTO product;
+    private Long transactionId;
+    private Long productId;
     private Double priceAtPurchase;
     private Integer quantity;
 

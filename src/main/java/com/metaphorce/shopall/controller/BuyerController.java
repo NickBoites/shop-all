@@ -24,6 +24,17 @@ public class BuyerController {
     @Autowired
     private ProductReviewService productReviewService;
 
+    @Autowired
+    private UserService userService;
+
+
+    // Crear un nuevo perfil de vendedor
+    @PostMapping("/register")
+    public ResponseEntity<UserDTO> createSellerProfile(@RequestBody UserRegistrationDTO userRegistrationDTO) {
+        UserDTO newProfile = userService.createUser(userRegistrationDTO);
+        return ResponseEntity.ok(newProfile);
+    }
+
     // Navegar por categorías de productos
     @GetMapping("/products")
     public ResponseEntity<List<ProductDTO>> browseProducts() {
@@ -33,15 +44,29 @@ public class BuyerController {
 
     // Buscar producto específico
     @GetMapping("/products/search")
-    public ResponseEntity<List<ProductDTO>> searchProduct(@RequestParam String query) {
+    public ResponseEntity<List<ProductDTO>> searchProduct(@RequestParam(name = "query") String query) {
         List<ProductDTO> foundProducts = productService.searchProducts(query);
+        return ResponseEntity.ok(foundProducts);
+    }
+
+    // Buscar producto específico
+    @GetMapping("/category/search")
+    public ResponseEntity<List<ProductDTO>> searchProductsByCategory(@RequestParam(name = "query") String query) {
+        List<ProductDTO> foundProducts = productService.searchProductsByCategory(query);
         return ResponseEntity.ok(foundProducts);
     }
 
     // Agregar producto al carrito
     @PostMapping("/cart")
-    public ResponseEntity<CartDTO> addToCart(@RequestBody CartItemDTO cartItemDto) {
-        CartDTO updatedCart = cartService.addCartItem(cartItemDto);
+    public ResponseEntity<CartDTO> addToCart(@RequestBody CartDTO cartDto) {
+        CartDTO updatedCart = cartService.addCartItem(cartDto);
+        return ResponseEntity.ok(updatedCart);
+    }
+
+    // Ver carrito
+    @GetMapping("/cart/{userId}")
+    public ResponseEntity<CartDTO> getCartByUserId(@PathVariable Long userId) {
+        CartDTO updatedCart = cartService.getCartByUserId(userId);
         return ResponseEntity.ok(updatedCart);
     }
 
@@ -58,6 +83,4 @@ public class BuyerController {
         ProductReviewDTO savedReview = productReviewService.saveReview(reviewDto);
         return ResponseEntity.ok(savedReview);
     }
-
-    // Aquí puedes agregar más métodos según las necesidades de ShopAll
 }
