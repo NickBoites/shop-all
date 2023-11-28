@@ -54,7 +54,7 @@ public class SellerController {
         return ResponseEntity.ok(newProduct);
     }
 
-    // Añadir un nuevo producto
+    // Obtener productos por vendedor
     @GetMapping("/products/{sellerId}")
     public ResponseEntity<List<ProductDTO>> getSellerProducts(@PathVariable Long sellerId) {
         List<ProductDTO> products = productService.getProductsForSeller(sellerId);
@@ -66,6 +66,13 @@ public class SellerController {
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long productId, @RequestBody ProductDTO productDto) {
         ProductDTO updatedProduct = productService.updateProduct(productId, productDto);
         return ResponseEntity.ok(updatedProduct);
+    }
+
+    // Eliminar un producto existente
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
+        productService.deleteProduct(productId);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{sellerId}/transactions")

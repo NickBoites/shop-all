@@ -18,5 +18,4 @@ public class Cart {
     @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItems;
 
-    // Getters y Setters
 }
