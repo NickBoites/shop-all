@@ -14,7 +14,7 @@ public class User {
     private Long userId;
 
     @NotBlank
-    private String userName;
+    private String username;
 
     @NotBlank
     @Email
@@ -26,5 +26,4 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    // Relaciones, Getters y Setters
 }

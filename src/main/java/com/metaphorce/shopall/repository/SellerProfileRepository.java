@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SellerProfileRepository extends JpaRepository<SellerProfile, Long> {
-    // Métodos de consulta personalizados si se requieren
 }

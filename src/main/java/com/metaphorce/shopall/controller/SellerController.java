@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class SellerController {
 
     // Crear un nuevo perfil de vendedor
     @PostMapping("/register")
-    public ResponseEntity<SellerProfileDTO> createSellerProfile(@RequestBody SellerProfileRegistrationDTO sellerProfileDto) {
+    public ResponseEntity<SellerProfileDTO> createSellerProfile(@Valid @RequestBody SellerProfileRegistrationDTO sellerProfileDto) {
         SellerProfileDTO newProfile = sellerProfileService.createSellerProfile(sellerProfileDto);
         return ResponseEntity.ok(newProfile);
     }
@@ -42,14 +43,14 @@ public class SellerController {
 
     // Actualizar perfil del vendedor
     @PutMapping("/{sellerId}")
-    public ResponseEntity<SellerProfileDTO> updateSellerProfile(@PathVariable Long sellerId, @RequestBody SellerProfileDTO sellerProfileDto) {
+    public ResponseEntity<SellerProfileDTO> updateSellerProfile(@PathVariable Long sellerId, @Valid @RequestBody SellerProfileDTO sellerProfileDto) {
         SellerProfileDTO updatedProfile = sellerProfileService.updateSellerProfile(sellerId, sellerProfileDto);
         return ResponseEntity.ok(updatedProfile);
     }
 
     // Añadir un nuevo producto
     @PostMapping("/products")
-    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDto) {
+    public ResponseEntity<ProductDTO> addProduct(@Valid @RequestBody ProductDTO productDto) {
         ProductDTO newProduct = productService.createProduct(productDto);
         return ResponseEntity.ok(newProduct);
     }
@@ -63,7 +64,7 @@ public class SellerController {
 
     // Actualizar un producto existente
     @PutMapping("/products/{productId}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long productId, @RequestBody ProductDTO productDto) {
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductDTO productDto) {
         ProductDTO updatedProduct = productService.updateProduct(productId, productDto);
         return ResponseEntity.ok(updatedProduct);
     }

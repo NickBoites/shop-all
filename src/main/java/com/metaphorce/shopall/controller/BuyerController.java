@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class BuyerController {
 
     // Crear un nuevo perfil de vendedor
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> createSellerProfile(@RequestBody UserRegistrationDTO userRegistrationDTO) {
+    public ResponseEntity<UserDTO> createSellerProfile(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
         UserDTO newProfile = userService.createUser(userRegistrationDTO);
         return ResponseEntity.ok(newProfile);
     }
@@ -58,7 +59,7 @@ public class BuyerController {
 
     // Agregar producto al carrito
     @PostMapping("/cart")
-    public ResponseEntity<CartDTO> addToCart(@RequestBody CartDTO cartDto) {
+    public ResponseEntity<CartDTO> addToCart(@Valid @RequestBody CartDTO cartDto) {
         CartDTO updatedCart = cartService.addCartItem(cartDto);
         return ResponseEntity.ok(updatedCart);
     }
@@ -79,14 +80,14 @@ public class BuyerController {
 
     // Completar transacción
     @PostMapping("/transaction")
-    public ResponseEntity<TransactionDTO> completeTransaction(@RequestBody TransactionDTO transactionDto) {
+    public ResponseEntity<TransactionDTO> completeTransaction(@Valid @RequestBody TransactionDTO transactionDto) {
         TransactionDTO completedTransaction = transactionService.completeTransaction(transactionDto);
         return ResponseEntity.ok(completedTransaction);
     }
 
     // Dejar una reseña de producto
     @PostMapping("/review")
-    public ResponseEntity<ProductReviewDTO> leaveProductReview(@RequestBody ProductReviewDTO reviewDto) {
+    public ResponseEntity<ProductReviewDTO> leaveProductReview(@Valid @RequestBody ProductReviewDTO reviewDto) {
         ProductReviewDTO savedReview = productReviewService.saveReview(reviewDto);
         return ResponseEntity.ok(savedReview);
     }

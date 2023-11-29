@@ -3,6 +3,7 @@ package com.metaphorce.shopall.service;
 import com.metaphorce.shopall.dto.ProductCategoryDTO;
 import com.metaphorce.shopall.dto.ProductDTO;
 import com.metaphorce.shopall.exception.ProductNotFoundException;
+import com.metaphorce.shopall.exception.SellerProfileNotFoundException;
 import com.metaphorce.shopall.model.Product;
 import com.metaphorce.shopall.model.ProductCategory;
 import com.metaphorce.shopall.model.SellerProfile;
@@ -31,6 +32,9 @@ public class ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private SellerProfileRepository sellerProfileRepository;
+
     // Obtener todos los productos
     public List<ProductDTO> getAllProducts() {
         List<Product> products = productRepository.findAll();
@@ -49,6 +53,12 @@ public class ProductService {
     // Crear un nuevo producto
     @Transactional
     public ProductDTO createProduct(ProductDTO productDTO) {
+        // Verificar si el vendedor existe
+        Long sellerId = productDTO.getSeller().getSellerId();
+        if (sellerId == null || !sellerProfileRepository.existsById(sellerId)) {
+            throw new SellerProfileNotFoundException("Vendedor con ID " + sellerId + " no encontrado");
+        }
+
         Product product = modelMapper.map(productDTO, Product.class);
         Product savedProduct = productRepository.save(product);
         return modelMapper.map(savedProduct, ProductDTO.class);

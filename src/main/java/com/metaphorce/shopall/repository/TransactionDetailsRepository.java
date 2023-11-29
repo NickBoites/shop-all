@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransactionDetailsRepository extends JpaRepository<TransactionDetails, Long> {
-    // Métodos de consulta personalizados si se requieren
 }

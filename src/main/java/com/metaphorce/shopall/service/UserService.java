@@ -5,6 +5,7 @@ import com.metaphorce.shopall.exception.UserNotFoundException;
 import com.metaphorce.shopall.model.User;
 import com.metaphorce.shopall.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,9 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     // Obtener detalles de un usuario por ID
     public UserDTO getUserById(Long userId) {
         Optional<User> user = userRepository.findById(userId);
@@ -34,6 +38,9 @@ public class UserService {
     @Transactional
     public UserDTO createUser(UserDTO userDto) {
         User user = modelMapper.map(userDto, User.class);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDTO.class);
     }
@@ -45,6 +52,9 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("Usuario con ID " + userId + " no encontrado para actualizar"));
 
         modelMapper.map(userDto, user);
+
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         User updatedUser = userRepository.save(user);
         return modelMapper.map(updatedUser, UserDTO.class);
     }
@@ -57,8 +67,6 @@ public class UserService {
 
         userRepository.delete(user);
     }
-
-    // Aquí puedes agregar más métodos según las necesidades de ShopAll
 }
 
 
