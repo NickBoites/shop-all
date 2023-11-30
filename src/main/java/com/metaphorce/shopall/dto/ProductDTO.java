@@ -1,12 +1,16 @@
 package com.metaphorce.shopall.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class ProductDTO {
     private Long productId;
@@ -31,4 +35,7 @@ public class ProductDTO {
     @NotNull(message = "La categoría del producto es obligatoria")
     @Valid
     private ProductCategoryDTO category;
+
+    public ProductDTO(long l, String product, String description, double v, int i, ProductCategoryDTO productCategoryDTO) {
+    }
 }
